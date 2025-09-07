@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"><title>Ventas – ERP Gestión</title>
+  <meta charset="UTF-8"><title>Compras – ERP Gestión</title>
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -28,31 +28,39 @@
   </aside>
 
   <main class="main">
-    <div class="header">
-      <h1>Ventas</h1>
-      <p>Productos separados por categorías (120+)</p>
-    </div>
-
-    <div style="margin-bottom:12px;">
-      <button class="btn btn-primary" onclick="processSale()"><i data-feather='credit-card'></i> Procesar Pago</button>
-    </div>
+    <div class="header"><h1>Compras</h1><p>Registra nuevas órdenes y actualiza inventario</p></div>
 
     <section class="grid cols-2">
-      <div id="salesProducts" class="grid" style="grid-template-columns:1fr; gap:16px;"></div>
-
       <div class="card">
-        <div style="font-weight:800; margin-bottom:8px;">Carrito</div>
-        <ul id="cartList" style="margin:0 0 10px 0; padding:0; list-style:none;"></ul>
-        <div id="cartTotals" style="margin-bottom:12px;"></div>
+        <div style="font-weight:800; margin-bottom:8px;">Catálogo</div>
+        <div id="poCatalog"></div>
+      </div>
+      <div class="card">
+        <div style="font-weight:800; margin-bottom:8px;">Orden de Compra</div>
+        <ul id="poCart" style="list-style:none; padding:0; margin:0 0 10px 0;"></ul>
         <div style="display:flex; gap:8px;">
-          <button class="btn btn-primary full" onclick="processSale()">Procesar Pago</button>
-          <button class="btn btn-gray full" onclick="localStorage.removeItem('cart'); renderCart();">Vaciar</button>
+          <button class="btn btn-primary" onclick="submitPO()">Registrar Orden</button>
+          <button class="btn btn-gray" onclick="localStorage.removeItem('poCart'); renderPOCart();">Vaciar</button>
         </div>
       </div>
     </section>
   </main>
 
   <script src="assets/js/app.js"></script>
-  <script>renderSalesProducts(); renderCart();</script>
+  <script>
+    (function(){
+      const cont = document.getElementById('poCatalog');
+      const prods = Store.get('products', []).slice(0,48);
+      cont.innerHTML = prods.map(p=>`
+        <div class="flex" style="justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--line);">
+          <div>
+            <div style="font-weight:700">${p.name}</div>
+            <div style="color:var(--muted); font-size:13px;">${p.sku} • Stock: ${p.stock}</div>
+          </div>
+          <button class="btn btn-primary" onclick="addToPO(${p.id},1)">Agregar</button>
+        </div>`).join('');
+      renderPOCart();
+    })();
+  </script>
 </body>
 </html>

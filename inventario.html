@@ -1,297 +1,162 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventario - ERP Gestión</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <style>
-        .sidebar {
-            transition: all 0.3s ease;
-        }
-        .sidebar-collapsed {
-            width: 80px;
-        }
-        .sidebar-expanded {
-            width: 250px;
-        }
-        .main-content {
-            transition: margin-left 0.3s ease;
-        }
-        .product-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Inventario – ERP Gestión</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    .sidebar { transition: all 0.3s ease; }
+    .sidebar-collapsed { width: 80px; }
+    .sidebar-expanded { width: 250px; }
+    .main-content { transition: margin-left 0.3s ease; }
+  </style>
 </head>
-<body class="bg-gray-50">
-    <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar (same as index.html) -->
-        <div id="sidebar" class="sidebar sidebar-expanded bg-gray-800 text-white flex flex-col">
-            <!-- Sidebar content same as index.html -->
-        </div>
-
-        <!-- Main Content -->
-        <div class="main-content flex-1 flex flex-col overflow-hidden">
-            <!-- Top Navigation (same as index.html) -->
-            <header class="bg-white shadow-sm">
-                <!-- Header content same as index.html -->
-            </header>
-
-            <!-- Inventory Content -->
-            <main class="flex-1 overflow-y-auto p-4 bg-gray-50">
-                <div class="mb-6 flex justify-between items-center">
-                    <div>
-                        <h1 class="text-2xl font-semibold text-gray-800">Inventario</h1>
-                        <p class="text-gray-600">Gestión de productos y stock</p>
-                    </div>
-                    <div class="flex space-x-3">
-                        <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg flex items-center">
-                            <i data-feather="download" class="w-4 h-4 mr-2"></i>
-                            Exportar
-                        </button>
-                        <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg flex items-center">
-                            <i data-feather="plus" class="w-4 h-4 mr-2"></i>
-                            Nuevo Producto
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Inventory Stats -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
-                                <i data-feather="box"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">Productos Totales</p>
-                                <p class="text-2xl font-semibold text-gray-800">142</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-green-100 text-green-600">
-                                <i data-feather="check-circle"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">En Stock</p>
-                                <p class="text-2xl font-semibold text-gray-800">118</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
-                                <i data-feather="alert-triangle"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">Stock Bajo</p>
-                                <p class="text-2xl font-semibold text-gray-800">8</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-red-100 text-red-600">
-                                <i data-feather="x-circle"></i>
-                            </div>
-                            <div class="ml-4">
-                                <p class="text-sm font-medium text-gray-500">Agotados</p>
-                                <p class="text-2xl font-semibold text-gray-800">16</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Inventory Actions -->
-                <div class="mb-6 bg-white rounded-lg shadow p-4">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                        <div class="mb-4 md:mb-0">
-                            <div class="relative w-full md:w-64">
-                                <input type="text" placeholder="Buscar producto..." class="pl-10 pr-4 py-2 w-full border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent">
-                                <i data-feather="search" class="absolute left-3 top-2.5 text-gray-400"></i>
-                            </div>
-                        </div>
-                        <div class="flex space-x-2">
-                            <select class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent">
-                                <option>Todas las categorías</option>
-                                <option>Electrónicos</option>
-                                <option>Oficina</option>
-                                <option>Accesorios</option>
-                            </select>
-                            <select class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent">
-                                <option>Ordenar por</option>
-                                <option>Nombre (A-Z)</option>
-                                <option>Nombre (Z-A)</option>
-                                <option>Stock (Mayor a menor)</option>
-                                <option>Stock (Menor a mayor)</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Products Table -->
-                <div class="bg-white rounded-lg shadow overflow-hidden">
-                    <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-                        <h2 class="text-lg font-semibold text-gray-800">Lista de Productos</h2>
-                        <div class="flex space-x-2">
-                            <button class="px-3 py-1 text-xs bg-green-100 text-green-600 rounded">Todos</button>
-                            <button class="px-3 py-1 text-xs bg-gray-100 text-gray-600 rounded">En Stock</button>
-                            <button class="px-3 py-1 text-xs bg-gray-100 text-gray-600 rounded">Stock Bajo</button>
-                            <button class="px-3 py-1 text-xs bg-gray-100 text-gray-600 rounded">Agotados</button>
-                        </div>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Producto</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoría</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Precio</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-                                    <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0 h-10 w-10">
-                                                <img src="http://static.photos/technology/200x200/1" alt="Product" class="h-10 w-10 rounded-full">
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Laptop HP EliteBook</div>
-                                                <div class="text-sm text-gray-500">Computadoras</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Electrónicos</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">LP-HP-001</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$1,200.00</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">5</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Bajo</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <button class="text-blue-600 hover:text-blue-900 mr-3">
-                                            <i data-feather="edit" class="w-4 h-4"></i>
-                                        </button>
-                                        <button class="text-red-600 hover:text-red-900">
-                                            <i data-feather="trash-2" class="w-4 h-4"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0 h-10 w-10">
-                                                <img src="http://static.photos/technology/200x200/2" alt="Product" class="h-10 w-10 rounded-full">
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Mouse Inalámbrico</div>
-                                                <div class="text-sm text-gray-500">Accesorios</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Accesorios</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">AC-MO-005</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$25.00</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">3</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Bajo</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <button class="text-blue-600 hover:text-blue-900 mr-3">
-                                            <i data-feather="edit" class="w-4 h-4"></i>
-                                        </button>
-                                        <button class="text-red-600 hover:text-red-900">
-                                            <i data-feather="trash-2" class="w-4 h-4"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr class="hover:bg-gray-50">
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <div class="flex-shrink-0 h-10 w-10">
-                                                <img src="http://static.photos/technology/200x200/3" alt="Product" class="h-10 w-10 rounded-full">
-                                            </div>
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium text-gray-900">Teclado Mecánico</div>
-                                                <div class="text-sm text-gray-500">Accesorios</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Accesorios</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">AC-TE-012</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">$75.00</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">1</td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Agotado</span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <button class="text-blue-600 hover:text-blue-900 mr-3">
-                                            <i data-feather="edit" class="w-4 h-4"></i>
-                                        </button>
-                                        <button class="text-red-600 hover:text-red-900">
-                                            <i data-feather="trash-2" class="w-4 h-4"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex items-center justify-between">
-                        <div class="text-sm text-gray-500">
-                            Mostrando <span class="font-medium">1</span> a <span class="font-medium">10</span> de <span class="font-medium">142</span> resultados
-                        </div>
-                        <div class="flex space-x-2">
-                            <button class="px-3 py-1 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                                Anterior
-                            </button>
-                            <button class="px-3 py-1 border rounded-md text-sm font-medium text-white bg-green-600 hover:bg-green-700">
-                                1
-                            </button>
-                            <button class="px-3 py-1 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                                2
-                            </button>
-                            <button class="px-3 py-1 border rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50">
-                                Siguiente
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
+<body class="flex bg-gray-50">
+  <!-- Barra lateral -->
+  <aside id="sidebar" class="sidebar sidebar-expanded fixed top-0 left-0 h-screen w-64 bg-white shadow-lg z-10">
+    <div class="p-4 text-xl font-bold border-b">
+      <a href="index.html">ERP Gestión</a>
     </div>
+    <nav class="mt-4 text-gray-700">
+      <a href="index.html" class="flex items-center px-4 py-2 hover:bg-gray-200">
+        <span data-feather="home" class="mr-2"></span>Dashboard
+      </a>
+      <p class="px-4 py-2 text-xs uppercase text-gray-500 mt-4">Operaciones</p>
+      <a href="ventas.html" class="flex items-center px-4 py-2 hover:bg-gray-200">
+        <span data-feather="shopping-cart" class="mr-2"></span>Ventas
+      </a>
+      <a href="facturacion.html" class="flex items-center px-4 py-2 hover:bg-gray-200">
+        <span data-feather="file-text" class="mr-2"></span>Facturación
+      </a>
+      <a href="inventario.html" class="flex items-center px-4 py-2 hover:bg-gray-200">
+        <span data-feather="archive" class="mr-2"></span>Inventario
+      </a>
+      <a href="compras.html" class="flex items-center px-4 py-2 hover:bg-gray-200">
+        <span data-feather="shopping-bag" class="mr-2"></span>Compras
+      </a>
+      <p class="px-4 py-2 text-xs uppercase text-gray-500 mt-4">Administración</p>
+      <a href="clientes.html" class="flex items-center px-4 py-2 hover:bg-gray-200">
+        <span data-feather="users" class="mr-2"></span>Clientes
+      </a>
+      <a href="proveedores.html" class="flex items-center px-4 py-2 hover:bg-gray-200">
+        <span data-feather="truck" class="mr-2"></span>Proveedores
+      </a>
+      <a href="configuracion.html" class="flex items-center px-4 py-2 hover:bg-gray-200">
+        <span data-feather="settings" class="mr-2"></span>Configuración
+      </a>
+      <p class="px-4 py-2 text-xs uppercase text-gray-500 mt-4">Reportes</p>
+      <a href="estadisticas.html" class="flex items-center px-4 py-2 hover:bg-gray-200">
+        <span data-feather="bar-chart-2" class="mr-2"></span>Estadísticas
+      </a>
+      <a href="reportes.html" class="flex items-center px-4 py-2 hover:bg-gray-200">
+        <span data-feather="file" class="mr-2"></span>Reportes
+      </a>
+    </nav>
+  </aside>
 
-    <script>
-        // Initialize AOS
-        AOS.init();
-        
-        // Initialize Feather Icons
-        feather.replace();
-        
-        // Toggle Sidebar
-        const toggleSidebar = document.getElementById('toggleSidebar');
-        const mobileToggleSidebar = document.getElementById('mobileToggleSidebar');
-        const sidebar = document.getElementById('sidebar');
-        
-        toggleSidebar.addEventListener('click', () => {
-            sidebar.classList.toggle('sidebar-collapsed');
-            sidebar.classList.toggle('sidebar-expanded');
-        });
-        
-        mobileToggleSidebar.addEventListener('click', () => {
-            sidebar.classList.toggle('hidden');
-        });
-    </script>
+  <!-- Contenido principal -->
+  <main class="main-content flex-1 ml-64 p-6">
+    <header class="mb-6">
+      <h1 class="text-3xl font-semibold">Inventario</h1>
+      <p class="text-gray-600">Gestión de productos y stock</p>
+    </header>
+
+    <!-- Tarjetas estadísticas del inventario -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div class="p-4 bg-white rounded-lg shadow hover:shadow-md transform transition hover:-translate-y-1">
+        <p class="text-sm text-gray-500">Productos Totales</p>
+        <p class="text-2xl font-bold">142</p>
+      </div>
+      <div class="p-4 bg-white rounded-lg shadow hover:shadow-md transform transition hover:-translate-y-1">
+        <p class="text-sm text-gray-500">En Stock</p>
+        <p class="text-2xl font-bold">118</p>
+      </div>
+      <div class="p-4 bg-white rounded-lg shadow hover:shadow-md transform transition hover:-translate-y-1">
+        <p class="text-sm text-gray-500">Stock Bajo</p>
+        <p class="text-2xl font-bold">8</p>
+      </div>
+      <div class="p-4 bg-white rounded-lg shadow hover:shadow-md transform transition hover:-translate-y-1">
+        <p class="text-sm text-gray-500">Agotados</p>
+        <p class="text-2xl font-bold">16</p>
+      </div>
+    </section>
+
+    <!-- Filtros -->
+    <section class="bg-white p-4 rounded-lg shadow mb-6">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
+        <div class="flex-1 mb-4 sm:mb-0">
+          <label class="block mb-1 font-medium">Categoría</label>
+          <select class="w-full border rounded px-2 py-1">
+            <option value="">Todas las categorías</option>
+            <option value="computadoras">Computadoras</option>
+            <option value="oficina">Oficina</option>
+            <option value="accesorios">Accesorios</option>
+          </select>
+        </div>
+        <div class="flex-1">
+          <label class="block mb-1 font-medium">Ordenar por</label>
+          <select class="w-full border rounded px-2 py-1">
+            <option value="nombre-asc">Nombre (A-Z)</option>
+            <option value="nombre-desc">Nombre (Z-A)</option>
+            <option value="stock-desc">Stock (Mayor a menor)</option>
+            <option value="stock-asc">Stock (Menor a mayor)</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tabla de productos -->
+    <section class="bg-white p-4 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-4">Lista de Productos</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead>
+            <tr class="bg-gray-100 text-left">
+              <th class="py-2 px-4 font-medium">Producto</th>
+              <th class="py-2 px-4 font-medium">Categoría</th>
+              <th class="py-2 px-4 font-medium">SKU</th>
+              <th class="py-2 px-4 font-medium">Precio</th>
+              <th class="py-2 px-4 font-medium">Stock</th>
+              <th class="py-2 px-4 font-medium">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="py-2 px-4">Laptop HP EliteBook</td>
+              <td class="py-2 px-4">Computadoras</td>
+              <td class="py-2 px-4">LP-HP-001</td>
+              <td class="py-2 px-4">$1,200.00</td>
+              <td class="py-2 px-4">5</td>
+              <td class="py-2 px-4 text-red-600">Bajo</td>
+            </tr>
+            <tr class="border-b">
+              <td class="py-2 px-4">Mouse inalámbrico</td>
+              <td class="py-2 px-4">Accesorios</td>
+              <td class="py-2 px-4">AC-MO-005</td>
+              <td class="py-2 px-4">$25.00</td>
+              <td class="py-2 px-4">3</td>
+              <td class="py-2 px-4 text-red-600">Bajo</td>
+            </tr>
+            <tr>
+              <td class="py-2 px-4">Teclado mecánico</td>
+              <td class="py-2 px-4">Accesorios</td>
+              <td class="py-2 px-4">AC-TE-012</td>
+              <td class="py-2 px-4">$75.00</td>
+              <td class="py-2 px-4">1</td>
+              <td class="py-2 px-4 text-red-600">Agotado</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init();
+    feather.replace();
+  </script>
 </body>
 </html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><title>Login – ERP Gestión</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body class="login-wrap">
+  <div class="card login-card">
+    <h1 class="brand-title">ERP Gestión</h1>
+    <p class="subtle">Bienvenido. Ingresa tus credenciales.</p>
+    <form id="loginForm" class="full" style="margin-top:14px;">
+      <div style="margin-bottom:12px;">
+        <label>Usuario</label>
+        <input name="user" placeholder="ADMIN" required>
+      </div>
+      <div style="margin-bottom:14px;">
+        <label>Contraseña</label>
+        <input name="pass" type="password" placeholder="1234" required>
+      </div>
+      <button class="btn btn-primary full">Ingresar</button>
+    </form>
+    <p class="subtle" style="margin-top:10px; font-size:12px;">Demo: <b>ADMIN</b> / <b>1234</b></p>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', e=>{
+      e.preventDefault();
+      const u=e.target.user.value.trim(), p=e.target.pass.value.trim();
+      if(Auth.login(u,p)) location.href='index.html'; else alert('Credenciales inválidas');
+    });
+  </script>
+</body>
+</html>

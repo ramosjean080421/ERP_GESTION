@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><title>Reportes – ERP Gestión</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <script>if(!localStorage.getItem('currentUser')) location.href='login.html';</script>
+
+  <aside class="sidebar">
+    <div class="brand"><a href="index.html">ERP Gestión</a></div>
+    <nav class="nav">
+      <a href="index.html"><i data-feather="home"></i> Dashboard</a>
+      <div class="group">Operaciones</div>
+      <a href="ventas.html"><i data-feather="shopping-cart"></i> Ventas</a>
+      <a href="facturacion.html"><i data-feather="file-text"></i> Facturación</a>
+      <a href="inventario.html"><i data-feather="archive"></i> Inventario</a>
+      <a href="compras.html"><i data-feather="shopping-bag"></i> Compras</a>
+      <div class="group">Administración</div>
+      <a href="clientes.html"><i data-feather="users"></i> Clientes</a>
+      <a href="proveedores.html"><i data-feather="truck"></i> Proveedores</a>
+      <a href="configuracion.html"><i data-feather="settings"></i> Configuración</a>
+      <div class="group">Reportes</div>
+      <a href="estadisticas.html"><i data-feather="bar-chart-2"></i> Estadísticas</a>
+      <a href="reportes.html"><i data-feather="file"></i> Reportes</a>
+    </nav>
+    <div class="sidebar-footer"><div class="u"></div><button id="btnLogout"><i data-feather="log-out"></i>Salir</button></div>
+  </aside>
+
+  <main class="main">
+    <div class="header"><h1>Reportes</h1><p>Genera y descarga reportes</p></div>
+
+    <section class="card">
+      <div class="grid cols-4">
+        <div><label>Tipo</label>
+          <select id="repType">
+            <option value="ventas">Ventas</option>
+            <option value="compras">Compras</option>
+            <option value="inventario">Inventario</option>
+            <option value="clientes">Clientes</option>
+            <option value="proveedores">Proveedores</option>
+          </select>
+        </div>
+        <div><label>Desde</label><input type="date" id="repFrom"></div>
+        <div><label>Hasta</label><input type="date" id="repTo"></div>
+        <div><label>Categoría</label>
+          <select id="repCategory">
+            <option value="">Todas</option>
+            <option>Computadoras</option><option>Laptops</option><option>Monitores</option><option>Componentes</option>
+            <option>Accesorios</option><option>Oficina</option><option>Redes</option><option>Almacenamiento</option>
+            <option>Impresoras</option><option>Software</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:8px;">
+        <button class="btn btn-primary" onclick="exportPDF(document.getElementById('repType').value)">Exportar PDF</button>
+        <button class="btn btn-primary" onclick="exportExcel(document.getElementById('repType').value)"><i data-feather='download'></i> Exportar Excel</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"><title>Ventas – ERP Gestión</title>
+  <meta charset="UTF-8"><title>Facturación – ERP Gestión</title>
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -28,31 +28,40 @@
   </aside>
 
   <main class="main">
-    <div class="header">
-      <h1>Ventas</h1>
-      <p>Productos separados por categorías (120+)</p>
-    </div>
+    <div class="header"><h1>Facturación</h1><p>Genera boleta o factura</p></div>
 
-    <div style="margin-bottom:12px;">
-      <button class="btn btn-primary" onclick="processSale()"><i data-feather='credit-card'></i> Procesar Pago</button>
-    </div>
+    <section class="card" style="margin-bottom:16px;">
+      <div style="font-weight:800; margin-bottom:8px;">Detalle de Venta</div>
+      <div style="overflow:auto;">
+        <table class="table">
+          <thead><tr><th>SKU</th><th>Producto</th><th>Cant.</th><th>Precio</th><th>Importe</th></tr></thead>
+          <tbody id="billingItems"></tbody>
+        </table>
+      </div>
+      <div style="margin-top:10px;">
+        <table class="table"><tbody id="billingTotals"></tbody></table>
+      </div>
+    </section>
 
-    <section class="grid cols-2">
-      <div id="salesProducts" class="grid" style="grid-template-columns:1fr; gap:16px;"></div>
-
-      <div class="card">
-        <div style="font-weight:800; margin-bottom:8px;">Carrito</div>
-        <ul id="cartList" style="margin:0 0 10px 0; padding:0; list-style:none;"></ul>
-        <div id="cartTotals" style="margin-bottom:12px;"></div>
-        <div style="display:flex; gap:8px;">
-          <button class="btn btn-primary full" onclick="processSale()">Procesar Pago</button>
-          <button class="btn btn-gray full" onclick="localStorage.removeItem('cart'); renderCart();">Vaciar</button>
+    <section class="card">
+      <div class="grid cols-2">
+        <div>
+          <label>Tipo de Documento</label>
+          <select id="docType"><option value="boleta">Boleta</option><option value="factura">Factura</option></select>
         </div>
+        <div>
+          <label>Cliente/Razón Social</label>
+          <input id="docClient" placeholder="Juan Pérez / Empresa S.A.">
+        </div>
+      </div>
+      <div style="margin-top:12px; display:flex; gap:8px;">
+        <button class="btn btn-primary" onclick="emitDocument(document.getElementById('docType').value)">Generar Documento</button>
+        <a class="btn btn-gray" href="ventas.html">Volver a Ventas</a>
       </div>
     </section>
   </main>
 
   <script src="assets/js/app.js"></script>
-  <script>renderSalesProducts(); renderCart();</script>
+  <script>loadBilling();</script>
 </body>
 </html>

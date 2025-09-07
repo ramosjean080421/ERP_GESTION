@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"><title>Dashboard – ERP Gestión</title>
+  <meta charset="UTF-8"><title>Clientes – ERP Gestión</title>
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -24,38 +24,37 @@
       <a href="estadisticas.html"><i data-feather="bar-chart-2"></i> Estadísticas</a>
       <a href="reportes.html"><i data-feather="file"></i> Reportes</a>
     </nav>
-    <div class="sidebar-footer">
-      <div class="u"></div>
-      <button id="btnLogout"><i data-feather="log-out"></i>Salir</button>
-    </div>
+    <div class="sidebar-footer"><div class="u"></div><button id="btnLogout"><i data-feather="log-out"></i>Salir</button></div>
   </aside>
 
   <main class="main">
-    <div class="header">
-      <h1>Dashboard</h1>
-      <p>Resumen general del negocio</p>
-    </div>
-
-    <section class="grid cols-4" style="margin-bottom:16px;">
-      <div class="card"><div>Ventas Hoy</div><div style="font-size:28px;font-weight:800">S/. 12,345</div><div style="color:var(--accent)">+12% vs ayer</div></div>
-      <div class="card"><div>Órdenes</div><div style="font-size:28px;font-weight:800">42</div><div style="color:var(--accent)">+5% vs ayer</div></div>
-      <div class="card"><div>Stock Bajo</div><div style="font-size:28px;font-weight:800">8</div><div style="color:#f87171">+3 desde ayer</div></div>
-      <div class="card"><div>Clientes Nuevos</div><div style="font-size:28px;font-weight:800">5</div><div style="color:var(--accent)">+100% vs ayer</div></div>
-    </section>
+    <div class="header"><h1>Clientes</h1><p>CRUD de clientes</p></div>
 
     <section class="grid cols-3">
-      <div class="card chart-box" style="grid-column: span 2;">
-        <div style="font-weight:800; margin-bottom:8px;">Ventas Semanales</div>
-        <canvas id="salesChart"></canvas>
+      <div class="card" style="grid-column: span 2;">
+        <div style="font-weight:800; margin-bottom:8px;">Listado</div>
+        <div style="overflow:auto;">
+          <table class="table">
+            <thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Acciones</th></tr></thead>
+            <tbody id="clientsBody"></tbody>
+          </table>
+        </div>
       </div>
-      <div class="card chart-box">
-        <div style="font-weight:800; margin-bottom:8px;">Métodos de Pago</div>
-        <canvas id="paymentChart"></canvas>
+
+      <div class="card">
+        <div style="font-weight:800; margin-bottom:8px;">Nuevo / Editar</div>
+        <form onsubmit="saveClient(event)">
+          <input type="hidden" name="id" id="clientId">
+          <div style="margin-bottom:10px;"><label>Nombre</label><input id="clientName" name="name" required></div>
+          <div style="margin-bottom:10px;"><label>Email</label><input id="clientEmail" name="email" type="email" required></div>
+          <div style="margin-bottom:10px;"><label>Teléfono</label><input id="clientPhone" name="phone" required></div>
+          <button class="btn btn-primary full">Guardar</button>
+        </form>
       </div>
     </section>
   </main>
 
   <script src="assets/js/app.js"></script>
-  <script>initCharts();</script>
+  <script>renderClients();</script>
 </body>
 </html>
